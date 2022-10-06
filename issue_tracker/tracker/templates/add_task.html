@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}
+    Task create
+{% endblock %}
+{% block content %}
+    <form action="{% url 'task_add' %}" method="POST">
+        {% csrf_token %}
+
+        <div class="form">
+            {% include 'partials/task_form.html' with main_title='TASK ADD' button_text='Создать' %}
+        </div>
+
+    </form>
+{% endblock %}
