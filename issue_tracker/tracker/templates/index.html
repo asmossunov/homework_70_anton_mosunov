@@ -20,7 +20,7 @@
                         <span class="descript">Задача</span>
                     </div>
                 </div>
-                <div class="col-2 info-block text-center">
+                <div class="col-3 info-block text-center">
                     <div>
                         <span class="descript">Тип</span>
                     </div>
@@ -36,12 +36,12 @@
                 {% for task in tasks %}
 
                     <div class="col-5 info-block text-center">
-                        <div>
-                            <span class="info-item">{{ task.text }}</span>
+                        <div class="col-5 info-block-link text-center">
+                            <a class="link" href="{% url 'task_detail' task.pk %}"><span class="info-item">{{ task.text }}</span></a>
                         </div>
                     </div>
 
-                    <div class="col-2 info-block text-center">
+                    <div class="col-3 info-block text-center">
                         <div>
                             <span class="info-item">{{ task.type }}</span>
                         </div>
