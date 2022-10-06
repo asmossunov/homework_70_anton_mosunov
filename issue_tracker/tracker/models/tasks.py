@@ -14,15 +14,15 @@ class Task(models.Model):
         null=False,
         blank=True
     )
-    status = models.ForeignKey(
-        to='tracker.Status',
-        verbose_name='Статус',
-        related_name='tasks',
-        on_delete=models.RESTRICT
-    )
     type = models.ForeignKey(
         to='tracker.Type',
         verbose_name='Тип',
+        related_name='tasks',
+        on_delete=models.RESTRICT
+    )
+    status = models.ForeignKey(
+        to='tracker.Status',
+        verbose_name='Статус',
         related_name='tasks',
         on_delete=models.RESTRICT
     )
