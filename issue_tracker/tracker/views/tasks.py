@@ -20,7 +20,7 @@ class TaskView(DetailView):
 class TaskAddView(CreateView):
     form_class = TaskForm
     template_name = 'add_task.html'
-    success_url = reverse_lazy('task_detail')
+    # success_url = reverse_lazy('task_detail')
 
     # def get(self, request, *args, **kwargs):
     #     context = self.get_context_data(**kwargs)
@@ -28,11 +28,39 @@ class TaskAddView(CreateView):
     #     context['form'] = form
     #     return self.render_to_response(context)
     #
-    # def post(self, request, *args, **kwargs):
-    #     form = TaskForm(request.POST)
-    #     if form.is_valid():
-    #         task = Task.objects.create(**form.cleaned_data)
-    #         return redirect('task_detail', pk=task.pk)
-    #     return render(request, 'article_create.html', context={'form': form})
+    def post(self, request, *args, **kwargs):
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            task = Task.objects.create(**form.cleaned_data)
+            return redirect('task_detail', pk=task.pk)
+        return render(request, 'article_create.html', context={'form': form})
+
+
+class TaskUpdateView(TemplateView):
+    template_name = 'update_task.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['task'] = get_object_or_404(Task, pk=kwargs['pk'])
+        return context
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        form = TaskForm(instance=context['task'])
+        context['form'] = form
+        return self.render_to_response(context)
+
+    def post(self, request, *args, **kwargs):
+        pk = kwargs.get('pk')
+        task = get_object_or_404(Task, pk=kwargs['pk'])
+        form = TaskForm(request.POST, instance=task)
+
+        if form.is_valid():
+            # tags = form.cleaned_data.pop('tags')
+            article = form.save()
+            # article.tags.set(tags)
+            # article.save()
+            return redirect('article_detail', pk=article.pk)
+        return render(request, 'article_create.html', context={'form': form})
 
 
