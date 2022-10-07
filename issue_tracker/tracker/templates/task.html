@@ -2,9 +2,6 @@
 {% block title %}
     Task: {{ task.text }}
 {% endblock %}
-{% block menu %}
-    <a href="{% url 'task_add' %}">Создать задачу</a>
-{% endblock %}
 {% block content %}
     <div class="container">
         <div class="box">
@@ -60,6 +57,10 @@
 
                 <div class="col-4 text-center">
                     <a href="{% url 'index' %}"><button type="submit" class="btn btn-outline-secondary"><i class="fa fa-home"></i></button></a>
+                </div>
+
+                <div class="col-3 text-center">
+                    <a href="{% url 'task_delete' task.pk %}"><button type="submit" class="btn btn-secondary btn-block">Удалить</button></a>
                 </div>
 
 

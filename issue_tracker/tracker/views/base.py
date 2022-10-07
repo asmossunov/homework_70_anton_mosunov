@@ -1,15 +1,15 @@
 
 from django.shortcuts import render
 
-from django.views.generic import TemplateView
+from django.views.generic import View
 
 from tracker.models import Task
 
 
-class IndexView(TemplateView):
-    template_name = 'index.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['tasks'] = Task.objects.all()
-        return context
+class IndexView(View):
+    def get(self, request, *args, **kwargs):
+        tasks = Task.objects.all()
+        context = {
+            'tasks': tasks
+        }
+        return render(request, 'index.html', context)
