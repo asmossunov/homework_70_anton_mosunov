@@ -13,3 +13,5 @@ class IndexView(View):
             'tasks': tasks
         }
         return render(request, 'index.html', context)
+
+
