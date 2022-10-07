@@ -36,9 +36,9 @@
                     <span class="descript">Тип: </span>
                 </div>
                 <div class="col-7 info-block text-center">
-                    <div>
-                        <span class="info-head">{{ task.type }}</span>
-                    </div>
+                    {% for type in task.types.all %}
+                        <span class="info-item">{{ type.type_name }}{% if not forloop.last %}, {% endif %}</span>
+                    {% endfor %}
                 </div>
             </div>
 
