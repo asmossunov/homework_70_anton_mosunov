@@ -15,17 +15,18 @@ class Task(models.Model):
         null=False,
         blank=True
     )
-    type = models.ForeignKey(
+
+    types = models.ManyToManyField(
         to='tracker.Type',
         verbose_name='Тип',
         related_name='tasks',
-        on_delete=models.RESTRICT
+        blank=True
     )
     status = models.ForeignKey(
         to='tracker.Status',
         verbose_name='Статус',
         related_name='tasks',
-        on_delete=models.RESTRICT
+        on_delete=models.PROTECT
     )
     created_at = models.DateTimeField(
         verbose_name='Дата создания',

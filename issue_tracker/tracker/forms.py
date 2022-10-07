@@ -6,12 +6,18 @@ from tracker.models.statuses import Status
 
 
 class TaskForm(forms.ModelForm):
-    status = forms.ModelChoiceField(queryset=Status.objects.all(), initial='New')
-    type = forms.ModelChoiceField(queryset=Type.objects.all(), initial='Task')
+    status = forms.ModelChoiceField(
+        queryset=Status.objects.all(),
+        initial='New')
+    types = forms.ModelMultipleChoiceField(
+        queryset=Type.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        initial=Type.objects.get(type_name='Task')
+    )
 
     class Meta:
         model = Task
-        fields = ('text', 'description', 'status', 'type')
+        fields = ('text', 'description', 'status', 'types')
         widgets = {
             'text': forms.TextInput(attrs={'class': 'form-input'}),
             'description': forms.Textarea(attrs={'cols': 21, 'rows': 5}),
