@@ -1,5 +1,10 @@
+import re
+
+from django.core.exceptions import ValidationError
+from django.core.validators import BaseValidator
 from django.db import models
 from django.urls import reverse
+from django.utils.deconstruct import deconstructible
 
 
 class Task(models.Model):
@@ -42,3 +47,29 @@ class Task(models.Model):
 
     def get_absolute_url(self):
         return reverse('task_detail', kwargs={'pk': self.pk})
+
+
+@deconstructible
+def max_length_validator(string):
+    if len(string) > 200:
+        raise ValidationError("Превышена максимальная длина строки 200 символов")
+    return string
+
+@deconstructible
+def first_number_validator(string):
+    if re.match(r'\d', string):
+        raise ValidationError('Название не должно начинаться с цифры')
+    return string
+
+@deconstructible
+class MinLengthValidator(BaseValidator):
+    message = 'Введённое значение "%(value) s" имеет длину %(show_value) d! ' \
+              'Должно состоять не чем из %(limit_value) d символов'
+    code = 'too_short'
+
+    def compare(self, a, b):
+        return a < b
+
+    def clean(self, x):
+        return len(x)
+
