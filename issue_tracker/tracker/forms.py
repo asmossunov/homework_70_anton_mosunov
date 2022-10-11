@@ -11,15 +11,19 @@ from tracker.models.tasks import max_length_validator, first_number_validator
 
 class TaskForm(forms.ModelForm):
     text = forms.CharField(
-        max_length=123,
-        validators=(MinLengthValidator(5), max_length_validator, first_number_validator, ))
+        label='Текст',
+        validators=(MinLengthValidator(5), max_length_validator, first_number_validator, )
+    )
     status = forms.ModelChoiceField(
+        label='Статус',
         queryset=Status.objects.all(),
-        initial='New')
+        initial='New'
+    )
     types = forms.ModelMultipleChoiceField(
+        label='Тип',
         queryset=Type.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
-        initial=Type.objects.get(type_name='Task')
+        widget=forms.CheckboxSelectMultiple
+        # initial=Type.objects.get(type_name='Task')
     )
 
     class Meta:
