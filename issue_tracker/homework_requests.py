@@ -10,9 +10,7 @@ def get_requests():
     print(f'\n Результат первого запроса: \n')
     for task in request_1:
         print(task)
-    # request_2 = Task.objects.filter(Q(status__status_name__in=[(Q(status__status_name__exact='In process')),
-    #                                                            (Q(status__status_name__exact='Done'))])
-    #                                 & Q(types__in=[1, 2, 3])).values('id', 'text')
+
     request_2 = Task.objects.filter(Q(status__in=[1, 2]) & Q(types__in=[1, 2])).values('id', 'text')
     print(f'\n Результат второго запроса: \n')
     for task in request_2:
