@@ -204,3 +204,22 @@ body {
 .menu a:hover {
     color: #bbd6dc;
 }
+
+.page-item.active .page-link{
+    color: white;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.page-link{
+    color: #3f636c;
+}
+
+.pagination{
+    margin-top: 50px;
+}
+
+.search-form{
+    color: #6c6c6c;
+    margin-bottom: 80px;
+}

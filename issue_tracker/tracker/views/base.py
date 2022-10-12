@@ -22,7 +22,7 @@ class IndexView(ListView):
     model = Task
     context_object_name = 'tasks'
     ordering = ('-created_at',)
-    paginate_by = 10
+    paginate_by = 3
     paginate_orphans = 0
 
     def get(self, request, *args, **kwargs):
