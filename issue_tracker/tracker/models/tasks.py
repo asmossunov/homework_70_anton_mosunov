@@ -33,6 +33,10 @@ class Task(models.Model):
         related_name='tasks',
         on_delete=models.PROTECT
     )
+    is_deleted = models.BooleanField(
+        verbose_name='Удалено',
+        default=False, null=False
+    )
     created_at = models.DateTimeField(
         verbose_name='Дата создания',
         auto_now_add=True

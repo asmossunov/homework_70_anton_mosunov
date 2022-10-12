@@ -34,3 +34,6 @@ class TaskForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'cols': 21, 'rows': 5}),
 
             }
+
+class SearchForm(forms.Form):
+    search = forms.CharField(max_length=100, required=False, label='Найти')
