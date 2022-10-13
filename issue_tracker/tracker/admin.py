@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from tracker.models import Task, Status, Type
+from tracker.models import Task, Status, Type, Project
 
 
 class TaskAdmin(admin.ModelAdmin):
@@ -27,6 +27,15 @@ class TypeAdmin(admin.ModelAdmin):
     readonly_fields = ('id',)
 
 
+class ProjectAdmin(admin.ModelAdmin):
+    list_display = ('id', 'start_date', 'end_date', 'project_name', 'project_description')
+    list_filter = ('id', 'start_date', 'end_date', 'project_name', 'project_description')
+    search_fields = ('project_name', 'project_description')
+    fields = ('start_date', 'end_date', 'project_name', 'project_description')
+    readonly_fields = ('id',)
+
+
 admin.site.register(Task, TaskAdmin)
 admin.site.register(Status, StatusAdmin)
 admin.site.register(Type, TypeAdmin)
+admin.site.register(Project, ProjectAdmin)

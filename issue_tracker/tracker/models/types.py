@@ -3,8 +3,10 @@ from django.db import models
 
 class Type(models.Model):
     type_name = models.CharField(
-        verbose_name='Тип',
-        max_length=100
+        verbose_name='Текст задачи',
+        max_length=200,
+        null=False,
+        blank=False
     )
     created_at = models.DateTimeField(
         verbose_name='Дата создания',
