@@ -19,6 +19,7 @@
        <div class="container">
            <ul class="menu">
                <a class="navbar-link" href="{% url 'index' %}"><i class="fa fa-home"></i> Домой</a>
+               <a class="navbar-link" href="{% url 'tasks' %}"><i class="fa fa-home"></i> Все задачи</a>
                <a class="navbar-link" href="{% url 'task_add' %}"> Создать задачу</a>
                {% block menu %}{% endblock %}
 
