@@ -15,10 +15,12 @@ class ProjectView(DetailView):
     template_name = 'project_detail.html'
     model = Project
 
+
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         project = self.object
-        tasks = project.tasks.order_by('-created_at')
+        tasks = project.tasks.order_by('-created_at').exclude(is_deleted=True)
         context['tasks'] = tasks
         return context
 
@@ -37,6 +39,6 @@ class ProjectUpdateView(SuccessDetailUrlMixin, UpdateView):
 
 
 class ProjectDeleteView(DeleteView):
-    template_name = 'product_confirm_delete.html'
+    template_name = 'project_confirm_delete.html'
     model = Project
     success_url = reverse_lazy('index')

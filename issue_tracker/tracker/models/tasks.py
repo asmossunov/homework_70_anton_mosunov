@@ -1,7 +1,8 @@
 import re
-
+from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.core.validators import BaseValidator
+
 from django.db import models
 from django.urls import reverse
 from django.utils.deconstruct import deconstructible
@@ -54,6 +55,16 @@ class Task(models.Model):
 
     def __str__(self):
         return f'{self.text} {self.description}'
+
+    class Meta:
+        verbose_name = 'Задача'
+        verbose_name_plural = 'Задачи'
+
+    def delete(self, using=None, keep_parents=False):
+        self.deleted_at = timezone.now()
+        self.is_deleted = True
+        self.save()
+
 
     def get_absolute_url(self):
         return reverse('task_detail', kwargs={'pk': self.pk})
