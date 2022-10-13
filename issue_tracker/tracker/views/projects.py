@@ -36,7 +36,7 @@ class ProjectUpdateView(SuccessDetailUrlMixin, UpdateView):
     context_object_name = 'project'
 
 
-# class ArticleDeleteView(DeleteView):
-#     template_name = 'task_confirm_delete.html'
-#     model = Project
-#     success_url = reverse_lazy('index')
+class ProjectDeleteView(DeleteView):
+    template_name = 'product_confirm_delete.html'
+    model = Project
+    success_url = reverse_lazy('index')

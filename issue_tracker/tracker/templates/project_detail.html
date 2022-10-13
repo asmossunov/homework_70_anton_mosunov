@@ -64,7 +64,7 @@
                 </div>
 
                 <div class="col-4 text-center">
-                    <a href="{% url 'project_update' project.pk %}"><button type="submit" class="btn btn-outline-secondary">Изменить</button></a>
+                    <a href="{% url 'project_delete' project.pk %}"><button type="submit" class="btn btn-outline-secondary">Удалить</button></a>
                 </div>
 
 
@@ -124,6 +124,11 @@
 
                 {% endfor %}
 
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-4 text-center">
+                    <a href="{% url 'create_project_task' %}"><button type="submit" class="btn btn-outline-secondary">Удалить</button></a>
+                </div>
             </div>
 
 

@@ -1,4 +1,6 @@
 from django.db import models
+from django.urls import reverse
+from django.utils import timezone
 
 
 class Project(models.Model):
@@ -38,3 +40,17 @@ class Project(models.Model):
         auto_now=True
     )
 
+    def __str__(self):
+        return f"{self.project_name} - {self.project_description}"
+
+    class Meta:
+        verbose_name = 'Проект'
+        verbose_name_plural = 'Проекты'
+
+    def delete(self, using=None, keep_parents=False):
+        self.deleted_at = timezone.now()
+        self.is_deleted = True
+        self.save()
+
+    def get_absolute_url(self):
+        return reverse('project_detail', kwargs={'pk': self.pk})

@@ -9,15 +9,15 @@
         <div class="box">
 
             <div class="head_text heading text-center">
-                <p class="main-title-home">ISSUE DELETE</p>
+                <p class="main-title-home">ISSUE PROJECT DELETE</p>
             </div>
 
             <div class="form">
-                {% include 'partials/delete_confirm_partial.html' with object='задачу' button_text='Удалить' %}
+                {% include 'partials/delete_confirm_partial.html' with object='проект' button_text='Удалить' %}
 
 
                 <div class="col-3 text-center ">
-                    <a href="{% url 'tasks' %}"><button type="submit" class="btn btn-outline-secondary">Нет</button></a>
+                    <a href="{% url 'index' %}"><button type="submit" class="btn btn-outline-secondary">Нет</button></a>
                 </div>
 
             </div>
