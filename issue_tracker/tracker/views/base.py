@@ -6,8 +6,6 @@ from urllib.parse import urlencode
 from tracker.models import Task, Project
 from tracker.forms import SearchForm
 
-# from homework_requests import get_requests
-
 
 class ProjectsIndexView(ListView):
     template_name = 'project/index.html'
