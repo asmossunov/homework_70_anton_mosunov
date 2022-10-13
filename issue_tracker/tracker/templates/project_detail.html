@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% block title %}
+    Task: {{ task.text }}
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="box">
+
+            <div class="head_text heading text-center">
+                <p class="main-title-home">PROJECT</p>
+                <p class="about-game">информация о проекте</p>
+            </div>
+
+            <div class="row justify-content-center text-center">
+                <div class="col-3 info-block text-center">
+                    <span class="descript">Проект:</span>
+                </div>
+                <div class="col-7 info-block text-center">
+                    <span class="info-head">{{ project.project_name }}</span>
+                </div>
+            </div>
+
+            <div class="row justify-content-center text-center">
+                <div class="col-3 info-block text-center">
+                    <span class="descript">Дата начала: </span>
+                </div>
+                <div class="col-7 info-block text-center">
+                    <div>
+                        <span class="info-head">{{ project.start_date |date:'Y-m-d' }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center text-center">
+                <div class="col-3 info-block text-center">
+                    <span class="descript">Дата окончания: </span>
+                </div>
+                <div class="col-7 info-block text-center">
+                    <div>
+                        <span class="info-head">{{ project.end_date |date:'Y-m-d' }}</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row justify-content-center text-center">
+                <div class="col-3 info-block text-center">
+                    <span class="descript">Описание: </span>
+                </div>
+                <div class="col-7 info-block text-center">
+
+                    <span class="text-break">{{ project.project_description | linebreaks }}</span>
+                </div>
+            </div>
+
+            <div class="row justify-content-center text-center">
+
+                <div class="col-4 text-center">
+                    <a href="{% url 'index' %}"><button type="submit" class="btn btn-outline-secondary"><i class="fa fa-home"></i></button></a>
+                </div>
+
+
+
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+            <div>
+                 <div class="row justify-content-center text-center">
+                <div class="col-5 info-block text-center">
+                    <div>
+                        <span class="descript">Задача</span>
+                    </div>
+                </div>
+                <div class="col-3 info-block text-center">
+                    <div>
+                        <span class="descript">Тип</span>
+                    </div>
+                </div>
+                <div class="col-2 info-block">
+                    <div>
+                        <span class="descript">Статус</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                {% for task in tasks %}
+
+                    <div class="col-5 info-block-link text-center">
+
+                            <a class="link" href="{% url 'task_detail' task.pk %}"><span class="info-item">{{ task.text }}</span></a>
+
+                    </div>
+
+                    <div class="col-3 info-block text-center">
+                        <div>
+                            {% for type in task.types.all %}
+                                <span class="info-item">{{ type.type_name }}{% if not forloop.last %}, {% endif %}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="col-2 info-block text-center">
+                        <div>
+                            <span class="info-item">{{ task.status}}</span>
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+
+
+
+        </div>
+    </div>
+{% endblock %}

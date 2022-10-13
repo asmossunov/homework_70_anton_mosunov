@@ -40,7 +40,7 @@ class Task(models.Model):
     project = models.ForeignKey(
         verbose_name='Проект',
         to='tracker.Project',
-        related_name='products',
+        related_name='tasks',
         on_delete=models.CASCADE
     )
     created_at = models.DateTimeField(
