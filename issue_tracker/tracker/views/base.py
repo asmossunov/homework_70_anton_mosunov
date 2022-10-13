@@ -10,7 +10,7 @@ from tracker.forms import SearchForm
 
 
 class ProjectsIndexView(ListView):
-    template_name = 'index.html'
+    template_name = 'project/index.html'
     model = Project
     context_object_name = 'projects'
     ordering = ('-created_at',)
@@ -46,7 +46,7 @@ class ProjectsIndexView(ListView):
 
 
 class TasksIndexView(ListView):
-    template_name = 'tasks_index.html'
+    template_name = 'task/tasks_index.html'
     model = Task
     context_object_name = 'tasks'
     ordering = ('-created_at',)
