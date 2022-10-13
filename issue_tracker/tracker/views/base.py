@@ -46,7 +46,7 @@ class ProjectsIndexView(ListView):
 
 
 class TasksIndexView(ListView):
-    template_name = 'tasks.html'
+    template_name = 'tasks_index.html'
     model = Task
     context_object_name = 'tasks'
     ordering = ('-created_at',)
