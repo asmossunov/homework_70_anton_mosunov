@@ -3,7 +3,7 @@ from django.urls import path
 
 from tracker.views.base import TasksIndexView, ProjectsIndexView
 from tracker.views.tasks import TaskView, TaskAddView, TaskUpdateView, TaskDeleteView
-from tracker.views.projects import ProjectView, ProjectCreateView
+from tracker.views.projects import ProjectView, ProjectCreateView, ProjectUpdateView, ProjectDeleteView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -17,5 +17,7 @@ urlpatterns = [
     path('projects/', ProjectsIndexView.as_view(), name='index'),
     path('projects/<int:pk>', ProjectView.as_view(), name='project_detail'),
     path('projects/add/', ProjectCreateView.as_view(), name='project_create'),
+    path('projects/<int:pk>/update/', ProjectUpdateView.as_view(), name='project_update'),
+    path('projects/<int:pk>/delete/', ProjectDeleteView.as_view(), name='task_delete'),
 
 ]

@@ -37,3 +37,4 @@ class Project(models.Model):
         verbose_name='Дата изменения',
         auto_now=True
     )
+

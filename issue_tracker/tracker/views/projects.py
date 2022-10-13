@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
 
 from tracker.models import Project, Task
@@ -29,10 +29,14 @@ class ProjectCreateView(SuccessDetailUrlMixin, CreateView):
     model = Project
 
 
-#
-#
-# class ArticleUpdateView(UpdateView):
-#     template_name = 'project_update.html'
-#     form_class = ProjectForm
+class ProjectUpdateView(SuccessDetailUrlMixin, UpdateView):
+    template_name = 'project_update.html'
+    form_class = ProjectForm
+    model = Project
+    context_object_name = 'project'
+
+
+# class ArticleDeleteView(DeleteView):
+#     template_name = 'task_confirm_delete.html'
 #     model = Project
-#     context_object_name = 'project'
+#     success_url = reverse_lazy('index')
