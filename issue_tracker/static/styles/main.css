@@ -88,7 +88,7 @@
     color: #6ea9b9;
 }
 .form-label{
-    font-size: 18px;
+    font-size: 20px;
     color: #6ea9b9;
 }
 
@@ -224,4 +224,8 @@ body {
 .search-form{
     color: #6c6c6c;
     margin-bottom: 80px;
+}
+
+.form-group{
+    margin:0 auto
 }
