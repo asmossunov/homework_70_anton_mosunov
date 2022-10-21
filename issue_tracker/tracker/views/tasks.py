@@ -1,6 +1,5 @@
-from django.shortcuts import get_object_or_404
 from django.urls import reverse
-from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 
 from tracker.models import Task
 from tracker.forms import TaskForm
@@ -11,13 +10,14 @@ class SuccessDetailUrlMixin:
         return reverse('article_detail', kwargs={'pk': self.object.pk})
 
 
-class TaskView(TemplateView):
+class TaskView(DetailView):
     template_name = 'task/task.html'
+    model = Task
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['task'] = get_object_or_404(Task, pk=kwargs['pk'])
-        return context
+    def get_queryset(self, **kwargs):
+        queryset = super().get_queryset()
+        queryset = Task.objects.filter(pk=self.kwargs.get('pk'), is_deleted=False)
+        return queryset
 
 
 class TaskAddView(CreateView):
