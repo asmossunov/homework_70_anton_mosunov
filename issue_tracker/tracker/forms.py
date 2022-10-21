@@ -42,7 +42,7 @@ class ProjectForm(forms.ModelForm):
     )
     project_description = forms.CharField(
         label='Описание',
-        widget=forms.Textarea
+        widget=forms.Textarea(attrs={'name': 'body', 'rows': 5, 'cols': 21})
     )
     start_date = forms.DateField(label='Дата начала', widget=forms.SelectDateWidget)
     end_date = forms.DateField(label='Дата окончания', widget=forms.SelectDateWidget)
