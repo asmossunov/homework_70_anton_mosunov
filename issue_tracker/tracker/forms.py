@@ -1,5 +1,4 @@
 from django import forms
-from django.core.exceptions import ValidationError
 from tracker.models.tasks import Task
 from tracker.models.types import Type
 from tracker.models.statuses import Status
@@ -24,7 +23,6 @@ class TaskForm(forms.ModelForm):
         label='Тип',
         queryset=Type.objects.all(),
         widget=forms.CheckboxSelectMultiple
-        # initial=Type.objects.get(type_name='Task')
     )
 
     class Meta:

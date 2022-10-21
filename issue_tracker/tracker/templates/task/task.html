@@ -58,15 +58,16 @@
                 <div class="col-4 text-center">
                     <a href="{% url 'index' %}"><button type="submit" class="btn btn-outline-secondary"><i class="fa fa-home"></i></button></a>
                 </div>
+                {% if user.is_authenticated %}
+                    <div class="col-3 text-center">
+                        <a href="{% url 'task_delete' task.pk %}"><button type="submit" class="btn btn-secondary btn-block">Удалить</button></a>
+                    </div>
 
-                <div class="col-3 text-center">
-                    <a href="{% url 'task_delete' task.pk %}"><button type="submit" class="btn btn-secondary btn-block">Удалить</button></a>
-                </div>
 
-
-                <div class="col-4 text-center">
-                    <a href="{% url 'task_update' task.pk %}"><button type="submit" class="btn btn-secondary btn-block">Редактировать</button></a>
-                </div>
+                    <div class="col-4 text-center">
+                        <a href="{% url 'task_update' task.pk %}"><button type="submit" class="btn btn-secondary btn-block">Редактировать</button></a>
+                    </div>
+                {% endif %}
 
             </div>
 

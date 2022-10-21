@@ -59,17 +59,19 @@
                     <a href="{% url 'index' %}"><button type="submit" class="btn btn-outline-secondary"><i class="fa fa-home"></i></button></a>
                 </div>
 
-                <div class="col-2 text-center">
-                    <a href="{% url 'project_update' project.pk %}"><button type="submit" class="btn btn-secondary btn-block">Изменить</button></a>
-                </div>
+                {% if user.is_authenticated %}
+                    <div class="col-2 text-center">
+                        <a href="{% url 'project_update' project.pk %}"><button type="submit" class="btn btn-secondary btn-block">Изменить</button></a>
+                    </div>
 
-                <div class="col-3 text-center">
-                    <a href="{% url 'project_delete' project.pk %}"><button type="submit" class="btn btn-secondary btn-block">Удалить</button></a>
-                </div>
+                    <div class="col-3 text-center">
+                        <a href="{% url 'project_delete' project.pk %}"><button type="submit" class="btn btn-secondary btn-block">Удалить</button></a>
+                    </div>
 
-                <div class="col-3 text-center">
-                    <a href="{% url 'task_add'  project.pk %}"><button type="submit" class="btn btn-secondary btn-block">Новая задача</button></a>
-                </div>
+                    <div class="col-3 text-center">
+                        <a href="{% url 'task_add'  project.pk %}"><button type="submit" class="btn btn-secondary btn-block">Новая задача</button></a>
+                    </div>
+                {% endif %}
             </div>
 
 

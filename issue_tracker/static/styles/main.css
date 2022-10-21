@@ -66,6 +66,12 @@
     padding: 0.7rem 2.5rem;
     border-radius: 2.25rem;
 }
+
+.button-exit{
+    font-size: 25px;
+    padding: 0.7rem 2.5rem;
+    border-radius: 2.25rem;
+}
 .text-break{
     margin-top: 60px;
     font-size: 30px;

@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
@@ -15,8 +16,6 @@ class ProjectView(DetailView):
     template_name = 'project/project_detail.html'
     model = Project
 
-
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         project = self.object
@@ -25,20 +24,20 @@ class ProjectView(DetailView):
         return context
 
 
-class ProjectCreateView(SuccessDetailUrlMixin, CreateView):
+class ProjectCreateView(SuccessDetailUrlMixin, LoginRequiredMixin, CreateView):
     template_name = 'project/project_create.html'
     form_class = ProjectForm
     model = Project
 
 
-class ProjectUpdateView(SuccessDetailUrlMixin, UpdateView):
+class ProjectUpdateView(SuccessDetailUrlMixin, LoginRequiredMixin, UpdateView):
     template_name = 'project/project_update.html'
     form_class = ProjectForm
     model = Project
     context_object_name = 'project'
 
 
-class ProjectDeleteView(DeleteView):
+class ProjectDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'project/project_confirm_delete.html'
     model = Project
     success_url = reverse_lazy('index')
