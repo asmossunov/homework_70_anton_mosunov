@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 from tracker.models.tasks import Task
 from tracker.models.types import Type
 from tracker.models.statuses import Status
@@ -59,3 +60,16 @@ class ProjectForm(forms.ModelForm):
 
 class SearchForm(forms.Form):
     search = forms.CharField(max_length=100, required=False, label='Найти')
+
+
+class AddUserForm(forms.ModelForm):
+
+    users = forms.ModelMultipleChoiceField(
+        label='Пользователи',
+        queryset=User.objects.all(),
+        widget=forms.CheckboxSelectMultiple
+    )
+    class Meta:
+        model = Project
+        fields = ('users',)
+

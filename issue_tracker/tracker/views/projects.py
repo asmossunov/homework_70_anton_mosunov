@@ -1,10 +1,13 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic import DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, TemplateView
 
 from tracker.models import Project, Task
 from tracker.forms import ProjectForm
+
+from tracker.forms import AddUserForm
 
 
 class SuccessDetailUrlMixin:
@@ -41,3 +44,42 @@ class ProjectDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'project/project_confirm_delete.html'
     model = Project
     success_url = reverse_lazy('index')
+
+
+class ProjectAddUserView(TemplateView):
+    template_name = 'project/project_add_user.html'
+    model = Project
+
+
+    def post(self, request, *args, **kwargs):
+        self.form = AddUserForm(self.request.POST)
+        self.user_form_value = self.get_users()
+        if self.user_form_value:
+            project_id = self.kwargs.get('pk')
+            project = Project.objects.get(id=project_id)
+            users = self.user_form_value
+            for user in users:
+                user = User.objects.get(username=user.username)
+                project.users.add(User.objects.get(username=user.username))
+            return redirect('project_detail', pk=project_id)
+
+    def get_search_value(self):
+        if self.form.is_valid():
+            return self.form.cleaned_data.get('users')
+        return None
+
+    def get_users(self):
+        if self.form.is_valid():
+            return self.form.cleaned_data.get('users')
+        return None
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ProjectAddUserView, self).get_context_data(object_list=object_list, **kwargs)
+        context['form'] = AddUserForm
+        return context
+
+
+class ProjectUserUpdateView(LoginRequiredMixin, UpdateView):
+    model = Project
+    form_class = AddUserForm
+    template_name = 'project/project_add_user.html'

@@ -53,6 +53,18 @@
                 </div>
             </div>
 
+
+            <div class="row justify-content-center text-center">
+                <div class="col-3 info-block text-center">
+                    <span class="descript">Пользователи:</span>
+                </div>
+                <div class="col-7 info-block text-center">
+                    {% for user in project.users.all %}
+                        <span class="info-item">{{ user.username }}{% if not forloop.last %}, {% endif %}</span>
+                    {% endfor %}
+                </div>
+            </div>
+
             <div class="row justify-content-center text-center">
 
                 <div class="col-2 text-center">
@@ -70,6 +82,14 @@
 
                     <div class="col-3 text-center">
                         <a href="{% url 'task_add'  project.pk %}"><button type="submit" class="btn btn-secondary btn-block">Новая задача</button></a>
+                    </div>
+
+                    <div class="col-3 text-center">
+                        <a href="{% url 'user_add'  project.pk %}"><button type="submit" class="btn btn-secondary btn-block">доб.пользов</button></a>
+                    </div>
+
+                    <div class="col-3 text-center">
+                        <a href="{% url 'user_delete'  project.pk %}"><button type="submit" class="btn btn-secondary btn-block">Удалить пользов</button></a>
                     </div>
                 {% endif %}
             </div>

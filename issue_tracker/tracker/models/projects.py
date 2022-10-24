@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
@@ -38,6 +39,11 @@ class Project(models.Model):
     changed_at = models.DateTimeField(
         verbose_name='Дата изменения',
         auto_now=True
+    )
+    users = models.ManyToManyField(
+        User,
+        verbose_name='Пользователь',
+        related_name='projects'
     )
 
     def __str__(self):
