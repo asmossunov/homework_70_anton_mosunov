@@ -78,7 +78,7 @@
 }
 
 .button-exit{
-    font-size: 25px;
+    font-size: 15px;
     padding: 0.7rem 2.5rem;
     border-radius: 2.25rem;
 }
@@ -212,11 +212,11 @@ body {
 }
 
 .menu a {
-    font-size: 20px;
+    font-size: 15px;
     display: inline-block;
     text-decoration: none;
     color: inherit;
-    padding: 26px 30px;
+    padding: 26px 20px;
 }
 
 .menu a:hover {
@@ -242,6 +242,19 @@ body {
     margin-bottom: 80px;
 }
 
+.hello{
+    font-size: 18px;
+    color: #6da8b8;
+    padding-left: 120px;
+}
 .form-group{
     margin:0 auto
+}
+
+.enter-link{
+    margin-left: 600px;
+}
+
+.user{
+    color: #bbd6dc;
 }

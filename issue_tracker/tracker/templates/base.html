@@ -24,11 +24,12 @@
 
                 {% if user.is_authenticated %}
                     <a class="navbar-link" href="{% url 'project_create' %}"> Создать проект</a>
+                    <span class="hello">Здравствуйте, <span class="user">{{ user.username }}</span></span>
                     <a class="navbar-link" href="{% url 'logout' %}"> <button type="submit" class="button-exit btn-secondary btn-block">Выход</button></a>
                 {% else %}
-                    <a href="{% url 'login' %}">Вход</a>
+                    <a class="enter-link" href="{% url 'login' %}">Вход</a>
                 {% endif %}
-
+                <a class="navbar-link" href="{% url 'register' %}"> Регистрация</a>
                {% block menu %}{% endblock %}
 
            </ul>
