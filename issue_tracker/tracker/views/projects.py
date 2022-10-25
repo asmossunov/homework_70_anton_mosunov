@@ -1,5 +1,6 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, TemplateView
@@ -8,6 +9,12 @@ from tracker.models import Project, Task
 from tracker.forms import ProjectForm
 
 from tracker.forms import AddUserForm
+
+
+class GroupPermission(UserPassesTestMixin):
+    groups = []
+    def test_func(self):
+        return self.request.user.groups.filter(name__in=self.groups).exists()
 
 
 class SuccessDetailUrlMixin:
@@ -27,28 +34,32 @@ class ProjectView(DetailView):
         return context
 
 
-class ProjectCreateView(SuccessDetailUrlMixin, LoginRequiredMixin, CreateView):
+class ProjectCreateView(GroupPermission, SuccessDetailUrlMixin, LoginRequiredMixin, CreateView):
     template_name = 'project/project_create.html'
     form_class = ProjectForm
     model = Project
+    groups = ['root', 'Project Manager']
 
 
-class ProjectUpdateView(SuccessDetailUrlMixin, LoginRequiredMixin, UpdateView):
+class ProjectUpdateView(GroupPermission, SuccessDetailUrlMixin, LoginRequiredMixin, UpdateView):
     template_name = 'project/project_update.html'
     form_class = ProjectForm
     model = Project
     context_object_name = 'project'
+    groups = ['Project Manager']
 
 
-class ProjectDeleteView(LoginRequiredMixin, DeleteView):
+class ProjectDeleteView(GroupPermission, LoginRequiredMixin, DeleteView):
     template_name = 'project/project_confirm_delete.html'
     model = Project
     success_url = reverse_lazy('index')
+    groups = ['Project Manager']
 
 
-class ProjectAddUserView(TemplateView):
+class ProjectAddUserView(GroupPermission, SuccessDetailUrlMixin, LoginRequiredMixin, TemplateView):
     template_name = 'project/project_add_user.html'
     model = Project
+    groups = ['Project Manager', 'Team Lead']
 
 
     def post(self, request, *args, **kwargs):
@@ -62,6 +73,13 @@ class ProjectAddUserView(TemplateView):
                 user = User.objects.get(username=user.username)
                 project.users.add(User.objects.get(username=user.username))
             return redirect('project_detail', pk=project_id)
+
+    def dispatch(self, request, *args, **kwargs):
+        project = Project.objects.get(pk=self.kwargs.get('pk'))
+        print(project)
+        if request.user not in project.users.all():
+            raise PermissionDenied
+        return super().dispatch(request, *args, **kwargs)
 
     def get_search_value(self):
         if self.form.is_valid():
@@ -79,7 +97,8 @@ class ProjectAddUserView(TemplateView):
         return context
 
 
-class ProjectUserUpdateView(LoginRequiredMixin, UpdateView):
+class ProjectUserUpdateView(GroupPermission, LoginRequiredMixin, UpdateView):
     model = Project
     form_class = AddUserForm
     template_name = 'project/project_add_user.html'
+    groups = ['Project Manager', 'Team Lead']

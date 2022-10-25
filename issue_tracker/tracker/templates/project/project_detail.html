@@ -67,36 +67,85 @@
 
             <div class="row justify-content-center text-center">
 
-                <div class="col-2 text-center">
+                <div class="col-10 info-block">
+                <div class="row justify-content-center text-center">
+                <div class="col-1 text-center">
                     <a href="{% url 'index' %}"><button type="submit" class="btn btn-outline-secondary"><i class="fa fa-home"></i></button></a>
                 </div>
 
                 {% if user.is_authenticated %}
-                    <div class="col-2 text-center">
-                        <a href="{% url 'project_update' project.pk %}"><button type="submit" class="btn btn-secondary btn-block">Изменить</button></a>
-                    </div>
+                    {% if  perms.tracker.change_project %}
+                        {% for user in project.users.all  %}
+                            {% if user.username == request.user.username  %}
+                                <div class="col-2 text-center">
+                                    <a href="{% url 'project_update' project.pk %}"><button type="submit" class="btn btn-secondary btn-block">Изменить</button></a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
 
-                    <div class="col-3 text-center">
-                        <a href="{% url 'project_delete' project.pk %}"><button type="submit" class="btn btn-secondary btn-block">Удалить</button></a>
-                    </div>
 
-                    <div class="col-3 text-center">
-                        <a href="{% url 'task_add'  project.pk %}"><button type="submit" class="btn btn-secondary btn-block">Новая задача</button></a>
-                    </div>
+                    {% if  perms.tracker.delete_project %}
+                        {% for user in project.users.all  %}
+                            {% if user.username == request.user.username  %}
+                            <div class="col-2 text-center">
+                                <a href="{% url 'project_delete' project.pk %}"><button type="submit" class="btn btn-secondary btn-block">Удалить</button></a>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
 
-                    <div class="col-3 text-center">
-                        <a href="{% url 'user_add'  project.pk %}"><button type="submit" class="btn btn-secondary btn-block">доб.пользов</button></a>
-                    </div>
 
-                    <div class="col-3 text-center">
-                        <a href="{% url 'user_delete'  project.pk %}"><button type="submit" class="btn btn-secondary btn-block">Удалить пользов</button></a>
-                    </div>
+
+
+                    {% if  perms.tracker.add_task %}
+                        {% for user in project.users.all  %}
+                            {% if user.username == request.user.username  %}
+                                <div class="col-2 text-center">
+                                    <a href="{% url 'task_add'  project.pk %}"><button type="submit" class="btn btn-secondary btn-block">Новая задача</button></a>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+
+
+
+                    {% for group in request.user.groups.all  %}
+                        {% if group.name != 'Developer' %}
+                            {% for user in project.users.all  %}
+                                {% if user.username == request.user.username  %}
+                                    <div class="col-2 text-center">
+                                        <a href="{% url 'user_add'  project.pk %}"><button type="submit" class="btn btn-secondary btn-block">+ Пользователь</button></a>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+
+
+
+                    {% for group in request.user.groups.all  %}
+                        {% if group.name != 'Developer' %}
+                            {% for user in project.users.all  %}
+                                {% if user.username == request.user.username  %}
+                                    <div class="col-2 text-center">
+                                        <a href="{% url 'user_delete'  project.pk %}"><button type="submit" class="btn btn-secondary btn-block">- Пользователь</button></a>
+                                    </div>
+                               {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
                 {% endif %}
+                </div>
+            </div>
             </div>
 
 
 
             {% if tasks %}
+            <br>
+            <br>
             <br>
             <div class="head_text heading text-center">
                 <p class="about-game">список задач проекта</p>

@@ -58,15 +58,33 @@
                 <div class="col-4 text-center">
                     <a href="{% url 'index' %}"><button type="submit" class="btn btn-outline-secondary"><i class="fa fa-home"></i></button></a>
                 </div>
+
                 {% if user.is_authenticated %}
-                    <div class="col-3 text-center">
-                        <a href="{% url 'task_delete' task.pk %}"><button type="submit" class="btn btn-secondary btn-block">Удалить</button></a>
-                    </div>
+                    {% if  perms.tracker.delete_task %}
+                        {% for user in task.project.users.all  %}
+                            {% if user.username == request.user.username  %}
+
+                                <div class="col-3 text-center">
+                                    <a href="{% url 'task_delete' task.pk %}"><button type="submit" class="btn btn-secondary btn-block">Удалить</button></a>
+                                </div>
+
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
 
 
-                    <div class="col-4 text-center">
-                        <a href="{% url 'task_update' task.pk %}"><button type="submit" class="btn btn-secondary btn-block">Редактировать</button></a>
-                    </div>
+                    {% if perms.tracker.change_task %}
+                        {% for user in task.project.users.all  %}
+                            {% if user.username == request.user.username  %}
+
+                                <div class="col-4 text-center">
+                                    <a href="{% url 'task_update' task.pk %}"><button type="submit" class="btn btn-secondary btn-block">Редактировать</button></a>
+                                </div>
+
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
                 {% endif %}
 
             </div>
