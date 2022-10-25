@@ -61,34 +61,22 @@
 
                 {% if user.is_authenticated %}
                     {% if  perms.tracker.delete_task %}
-                        {% for user in task.project.users.all  %}
-                            {% if user.username == request.user.username  %}
-
-                                <div class="col-3 text-center">
-                                    <a href="{% url 'task_delete' task.pk %}"><button type="submit" class="btn btn-secondary btn-block">Удалить</button></a>
-                                </div>
-
-                            {% endif %}
-                        {% endfor %}
+                        {% if request.user in task.project.users.all or request.user.username == 'root'  %}
+                            <div class="col-3 text-center">
+                                <a href="{% url 'task_delete' task.pk %}"><button type="submit" class="btn btn-secondary btn-block">Удалить</button></a>
+                            </div>
+                        {% endif %}
                     {% endif %}
-
 
                     {% if perms.tracker.change_task %}
-                        {% for user in task.project.users.all  %}
-                            {% if user.username == request.user.username  %}
-
-                                <div class="col-4 text-center">
-                                    <a href="{% url 'task_update' task.pk %}"><button type="submit" class="btn btn-secondary btn-block">Редактировать</button></a>
-                                </div>
-
-                            {% endif %}
-                        {% endfor %}
+                        {% if request.user in task.project.users.all or request.user.username == 'root' %}
+                            <div class="col-4 text-center">
+                                <a href="{% url 'task_update' task.pk %}"><button type="submit" class="btn btn-secondary btn-block">Редактировать</button></a>
+                            </div>
+                        {% endif %}
                     {% endif %}
-
                 {% endif %}
-
             </div>
-
         </div>
     </div>
 {% endblock %}

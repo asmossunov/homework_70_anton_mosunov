@@ -23,7 +23,9 @@
                 <a class="navbar-link" href="{% url 'tasks' %}"> Все задачи</a>
 
                 {% if user.is_authenticated %}
-                    <a class="navbar-link" href="{% url 'project_create' %}"> Создать проект</a>
+                    {% if perms.tracker.add_project %}
+                        <a class="navbar-link" href="{% url 'project_create' %}"> Создать проект</a>
+                    {% endif %}
                     <span class="hello">Здравствуйте, <span class="user">{{ user.username }}</span></span>
                     <a class="navbar-link" href="{% url 'logout' %}?next={{ request.get_full_path }}"> <button type="submit" class="button-exit btn-secondary btn-block">Выход</button></a>
                 {% else %}

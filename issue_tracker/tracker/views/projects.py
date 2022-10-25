@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, CreateView, UpdateView, DeleteView, TemplateView
 
@@ -38,7 +38,16 @@ class ProjectCreateView(GroupPermission, SuccessDetailUrlMixin, LoginRequiredMix
     template_name = 'project/project_create.html'
     form_class = ProjectForm
     model = Project
-    groups = ['root', 'Project Manager']
+    groups = ['Project Manager']
+
+    def post(self, request, *args, **kwargs):
+        form = ProjectForm(request.POST)
+        if form.is_valid():
+            project = Project.objects.create(**form.cleaned_data)
+            project.users.add(request.user)
+            return redirect('project_detail', pk=project.pk)
+
+        return render(request, 'project/project_create.html', context={'form': form})
 
 
 class ProjectUpdateView(GroupPermission, SuccessDetailUrlMixin, LoginRequiredMixin, UpdateView):
@@ -76,10 +85,12 @@ class ProjectAddUserView(GroupPermission, SuccessDetailUrlMixin, LoginRequiredMi
 
     def dispatch(self, request, *args, **kwargs):
         project = Project.objects.get(pk=self.kwargs.get('pk'))
-        print(project)
-        if request.user not in project.users.all():
-            raise PermissionDenied
-        return super().dispatch(request, *args, **kwargs)
+        if request.user != 'root':
+            return super().dispatch(request, *args, **kwargs)
+        else:
+            if request.user not in project.users.all():
+                raise PermissionDenied
+
 
     def get_search_value(self):
         if self.form.is_valid():
