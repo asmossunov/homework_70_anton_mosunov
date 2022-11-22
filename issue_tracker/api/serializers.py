@@ -30,10 +30,8 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    # project = ProjectSerializer(read_only=True)
-    # status = StatusSerializer(read_only=True)
-    project = serializers.PrimaryKeyRelatedField(read_only=True)
-    status = serializers.PrimaryKeyRelatedField(read_only=True)
+    project = ProjectSerializer(read_only=True)
+    status = StatusSerializer(read_only=True)
     types = TypeSerializer(read_only=True)
 
 
