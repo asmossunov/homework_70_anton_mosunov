@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'tracker',
     'django_bootstrap5',
     'accounts',
-    'tasks_api',
+    'api',
     'rest_framework'
 
 ]
