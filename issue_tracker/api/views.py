@@ -15,4 +15,12 @@ class TaskDetailView(APIView):
         return Response(serializer.data)
 
 
+class TaskUpdateView(APIView):
 
+    def put(self, request, pk):
+        task = Task.objects.get(pk=pk)
+        serializer = TaskSerializer(task, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(data=serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
