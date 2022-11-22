@@ -25,6 +25,7 @@ class TaskUpdateView(APIView):
             return JsonResponse(data=serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class TaskDeleteView(APIView):
 
     def delete(self, request, pk, format=None):
@@ -51,3 +52,10 @@ class ProjectUpdateView(APIView):
             return JsonResponse(data=serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class ProjectDeleteView(APIView):
+
+    def delete(self, request, pk):
+        project = Project.objects.get(pk=pk)
+        project.delete()
+        return Response(data={"id": project.id})
